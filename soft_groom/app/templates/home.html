@@ -1,0 +1,86 @@
+{% extends 'base.html' %}
+
+{% load static%}
+
+{% block content %}
+<main class="px-3">
+
+<div class="carousel slide" id="carouselControls" data-bs-ride="carousel">
+  <div class="carousel-indicators">
+    <button type="button" data-bs-target="#carouselControls" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
+    <button type="button" data-bs-target="#carouselControls" data-bs-slide-to="1" aria-label="Slide 2"></button>
+    <button type="button" data-bs-target="#carouselControls" data-bs-slide-to="2" aria-label="Slide 3"></button>
+  </div>
+  <div class="carousel-inner">
+    <div class="carousel-item active">
+        <img class="d-block w-100" src="{% static 'app/img/dog_groom.jpg' %}" alt="">
+        <div class="carousel-caption d-none d-md-block">
+            <h3>Стрижка</h3>
+        </div>
+    </div>
+    <div class="carousel-item">
+        <img src="{% static 'app/img/cat_groom1.jpg' %}" class="d-block w-100" alt="">
+        <div class="carousel-caption d-none d-md-block">
+            <h3>Экспресс-линька</h3>
+        </div>
+    </div>
+    <div class="carousel-item">
+        <img src="{% static 'app/img/pet-toys1.jpg' %}" class="d-block w-100" alt="">
+        <div class="carousel-caption d-none d-md-block">
+            <h3>Зоотовары</h3>
+        </div>
+      </div>
+  </div>
+  <a class="carousel-control-prev" role="button" data-bs-target="#carouselControls" data-bs-slide="prev">
+    <span class="carousel-control-prev-icon"></span>
+  </a>
+  <a class="carousel-control-next" role="button" data-bs-target="#carouselControls" data-bs-slide="next">
+    <span class="carousel-control-next-icon"></span>
+  </a>
+</div>
+
+<br>
+
+<div class="row">
+    <div class="col-lg-4 col-md-5 col-sm-4 offset-md-1 offset-sm-1 col-12 mt-4">
+        <h2 class="contact-title">Хотите записать питомца на стрижку?</h2>
+    </div>
+    <div class="col-lg-4 col-md-5 col-sm-4 offset-md-1 offset-sm-1 col-12 mt-4">
+        <form method="post" >
+            <h4 class="contact-form__title">Оставьте заявку и мы вам перезвоним</h4>
+            <br>
+            {% csrf_token %}
+            {% if success %}
+            <div class="alert alert-damage">
+                <strong>Спасибо за сообщение!</strong>
+            </div>
+            {% endif %}
+            {% if messages %}
+              <ul class="messages">
+                {% for message in messages %}
+                  <li {% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+                {% endfor %}
+              </ul>
+            {% endif %}
+            <h5>Введите ваше имя:</h5>
+
+            {{ form.name }}
+            <br>
+            <br>
+            <h5>Введите ваш телефон:</h5>
+
+            {{ form.phone }}
+            <br>
+            <br>
+            <span>{{ error }}</span>
+
+            <a>Нажимая "Отправить" Вы соглашаетесь на обработку персональных данных</a>
+            <br>
+            <br>
+            <button type="submit" class="btn btn-primary">Отправить</button>
+
+        </form>
+    </div>
+</div>
+</main>
+{% endblock %}

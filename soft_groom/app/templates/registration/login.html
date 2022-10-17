@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+  {% if form.errors %}
+    <p>Ваше имя пользователя и пароль не совпадают. Пожалуйста, попробуйте еще раз.</p>
+  {% endif %}
+  
+  {% if next %}
+    {% if user.is_authenticated %}
+      <p>У вашего аккаунта нет доступа к этой странице. Чтобы продолжить, 
+        войдите в систему с учетной записью, которая имеет доступ.</p>
+    {% else %}
+      <h3>Вход</h3>
+    {% endif %}
+  {% endif %}
+  
+  <div class="col-sm-5 col-md-6 col-12 pb-4">
+  <form method="post" action="{% url 'login' %}" class="u-clearfix u-form-custom-backend u-form-spacing-20 u-form-vertical u-inner-form" source="custom" name="form" style="padding: 30px;">
+    {% csrf_token %}
+    <div class="u-form-group u-form-name">
+    <table>
+      <tr>
+        <td>{{ form.username.label_tag }}</td>
+        <td>{{ form.username }}</td>
+      </tr>
+    </div>
+      <tr>
+        <td>{{ form.password.label_tag }}</td>
+        <td>{{ form.password }}</td>
+      </tr>
+    </table>
+    <div class="u-align-left u-form-group u-form-submit">
+    <input type="submit" value="Войти" />
+    </div>
+    <input type="hidden" name="next" value="{{ next }}" class="u-form-control-hidden"/>
+  </form>
+  </div>
+  
+{% endblock %}
