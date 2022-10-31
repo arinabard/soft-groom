@@ -1,0 +1,33 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<div class="col-sm-5 col-md-6 col-12 pb-4">
+    <h1>Отзывы</h1>
+    <div>
+        {% for comment in comments %}
+            <div class="comment mt-4 text-center">
+                <h5>Автор: {{ comment.author.name }}</h5>
+                <span class="mx-auto text-muted">Дата: {{ comment.issued }}</span> 
+                <br>
+                <p>"{{ comment.content }}"</p>
+            </div>
+        {% endfor %}
+    </div>
+</div>
+
+<div class=col-lg-4 col-md-5 col-sm-4 offset-md-1 offset-sm-1 col-12 mt-4 style="margin-left: 100px;">
+    {% if perms.app.add_comment %}
+    <h3>Написать отзыв</h3>
+    <form method="POST">
+        {% csrf_token %}
+        {{ form.content }}
+        <br>
+        <button type="submit" class="btn btn-primary">Отправить</button>
+    </form>
+    {% else %}
+    <h3>Зарегестреруйтесь, чтобы оставить отзыв</h3>
+    {% endif %}
+</div>
+
+{% endblock %}
